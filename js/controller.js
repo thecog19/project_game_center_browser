@@ -7,3 +7,5 @@ var Controller = {
 $(document).ready(function() {
   Controller.init();
 });
+
+//merge view and model! woo! :D
