@@ -4,8 +4,10 @@ var Controller = {
   },
 
   initalizeBoard: function(size){
+    this.clear();
     Model.init(size);
     View.renderBoard(Model.boardEdges);
+    View.renderMGS(Model.snakeBody);
   },
 
   selectSize: function(event){

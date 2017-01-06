@@ -10,14 +10,23 @@ var View = {
 
   renderBoard: function(boardEdges){
     var $container = $(".container");
-    for(var col = 1; col <= boardEdges.xmax; col++ ){
-      for(var cell = 1; cell <= boardEdges.ymax; cell++ ){
-        var $square = $("<div>").addClass("square");
+    for(var col = 0; col < boardEdges.xmax; col++ ){
+      for(var cell = 0; cell < boardEdges.ymax; cell++ ){
+        var $square = $("<div>").addClass("square").attr({
+          "data-x": col,
+          "data-y": cell
+        });
         $container.append($square);
       }
       $container.append("<br>")
     }
-    
+  },
+
+  renderMGS: function(snake){
+    snake.forEach(function(snakeBit){
+      var $coordinate = $(".square").filter("[data-x='" + snakeBit[0] +"']").filter("[data-y='" + snakeBit[1] +"']");
+      $coordinate.addClass("snek");
+    })
   }  
 };
 

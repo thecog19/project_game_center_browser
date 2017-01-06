@@ -4,9 +4,11 @@ var Model = {
     ymax: 0
   },
 
+  snakeBody: [],
+
   init: function(size) {
     this.createBoard(size);
-    //this.createSnake();
+    this.createSnake();
     // this.placeFood();
   },
 
@@ -14,7 +16,17 @@ var Model = {
   createBoard: function(size){
     this.boardEdges.xmax = size;
     this.boardEdges.ymax = size;
-  }
+  },
+
+  genRandCoords: function(){
+    var x = Math.floor(Math.random() * (this.boardEdges.xmax));
+    var y = Math.floor(Math.random() * (this.boardEdges.ymax));
+    return [x, y];
+  },
+
+  createSnake: function(){
+    this.snakeBody.push(this.genRandCoords());
+  },
 
 };
 
