@@ -1,7 +1,14 @@
 var View = {
-  init: function() {
-    // im initialized
+  init: function(callbacks) {
+    var size = 11001010101
+    $("button").on("click", this.selectSize)
+    callbacks.intializeBoard(size)
   },
+
+  selectSize: function(event){
+    return $("select option:selected").val()
+
+  }
 };
 
 //render food

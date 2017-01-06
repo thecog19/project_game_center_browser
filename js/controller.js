@@ -1,8 +1,14 @@
 var Controller = {
   init: function() {
-    // im initialized
+    View.init({intializeBoard: this.intializeBoard})
   },
+
+  intializeBoard: function(size){
+    console.log("YEAH SNAKES  " + size)
+  }
 };
+
+
 
 $(document).ready(function() {
   Controller.init();

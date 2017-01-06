@@ -2,6 +2,7 @@ var Model = {
   init: function() {
     // im initialized
   },
+  gameStart: function(){}
 };
 
 // store snake body, array of coordinates. 
