@@ -6,10 +6,12 @@ var Model = {
 
   snakeBody: [],
 
+  foodCoords: [],
+
   init: function(size) {
     this.createBoard(size);
     this.createSnake();
-    // this.placeFood();
+    this.addFood();
   },
 
 
@@ -28,15 +30,29 @@ var Model = {
     this.snakeBody.push(this.genRandCoords());
   },
 
+  addFood: function() {
+    var overlap = true;
+    while (overlap) {
+      this.foodCoords = this.genRandCoords();
+      this.snakeBody.forEach(function(snakeBit) {
+        var differentX = snakeBit[0] !== Model.foodCoords[0];
+        var differentY = snakeBit[1] !== Model.foodCoords[1];
+        if (differentX && differentY) {
+          overlap = false;
+        }
+      });
+    }
+  }
+
 };
 
-// store snake body, array of coordinates. 
+// store snake body, array of coordinates.
 // store direction of snake
 // logic for which direction to set the snake
 // store the plane dimensions
 // store food as coordinate pair
 // growning snake logic
 // food placing logic
-// losing logic 
+// losing logic
 // food eating logic (remove from board)
 // score logic

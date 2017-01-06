@@ -8,6 +8,7 @@ var Controller = {
     Model.init(size);
     View.renderBoard(Model.boardEdges);
     View.renderMGS(Model.snakeBody);
+    View.renderFood(Model.foodCoords);
   },
 
   selectSize: function(event){

@@ -24,9 +24,17 @@ var View = {
 
   renderMGS: function(snake){
     snake.forEach(function(snakeBit){
-      var $coordinate = $(".square").filter("[data-x='" + snakeBit[0] +"']").filter("[data-y='" + snakeBit[1] +"']");
-      $coordinate.addClass("snek");
+      View.renderObject(snakeBit[0], snakeBit[1], "snek");
     });
+  },
+
+  renderFood: function(foodCoords) {
+    this.renderObject(foodCoords[0], foodCoords[1], "food");
+  },
+
+  renderObject: function(x,y,klass) {
+    var $coords = $(".square").filter("[data-x='" + x +"']").filter("[data-y='" + y +"']");
+    $coords.addClass(klass);
   },
 
   clear: function() {
@@ -35,6 +43,7 @@ var View = {
     $square.remove();
     $br.remove();
   }
+
 };
 
 //render food
