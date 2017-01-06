@@ -13,6 +13,11 @@ var Controller = {
   selectSize: function(event){
      var size = View.returnSize();
      Controller.initalizeBoard(size);
+  },
+
+  clear: function() {
+    Model.snakeBody = [];
+    View.clear();
   }
 };
 

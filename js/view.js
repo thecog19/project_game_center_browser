@@ -18,7 +18,7 @@ var View = {
         });
         $container.append($square);
       }
-      $container.append("<br>")
+      $container.append("<br>");
     }
   },
 
@@ -26,18 +26,25 @@ var View = {
     snake.forEach(function(snakeBit){
       var $coordinate = $(".square").filter("[data-x='" + snakeBit[0] +"']").filter("[data-y='" + snakeBit[1] +"']");
       $coordinate.addClass("snek");
-    })
-  }  
+    });
+  },
+
+  clear: function() {
+    var $square = $('.square');
+    var $br = $('br');
+    $square.remove();
+    $br.remove();
+  }
 };
 
 //render food
 //render snake
 //render board edges
 //add and remove snake parts
-//add and remove food. 
+//add and remove food.
 //display score
 //render game over
 //render select board game size
-//stretch goal: game only runs on hover. 
+//stretch goal: game only runs on hover.
 //returns key directions
-//returns entered grid size. 
+//returns entered grid size.
