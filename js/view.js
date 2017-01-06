@@ -1,14 +1,24 @@
 var View = {
   init: function(callbacks) {
-    var size = 11001010101
-    $("button").on("click", this.selectSize)
-    callbacks.intializeBoard(size)
+    var $button = $("button");
+    $button.on("click", callbacks.selectSize);
   },
 
-  selectSize: function(event){
-    return $("select option:selected").val()
+  returnSize: function(){
+    return $("select option:selected").val();
+  },
 
-  }
+  renderBoard: function(boardEdges){
+    var $container = $(".container");
+    for(var col = 1; col <= boardEdges.xmax; col++ ){
+      for(var cell = 1; cell <= boardEdges.ymax; cell++ ){
+        var $square = $("<div>").addClass("square");
+        $container.append($square);
+      }
+      $container.append("<br>")
+    }
+    
+  }  
 };
 
 //render food

@@ -1,10 +1,16 @@
 var Controller = {
   init: function() {
-    View.init({intializeBoard: this.intializeBoard})
+    View.init({selectSize: this.selectSize});
   },
 
-  intializeBoard: function(size){
-    console.log("YEAH SNAKES  " + size)
+  initalizeBoard: function(size){
+    Model.init(size);
+    View.renderBoard(Model.boardEdges);
+  },
+
+  selectSize: function(event){
+     var size = View.returnSize();
+     Controller.initalizeBoard(size);
   }
 };
 

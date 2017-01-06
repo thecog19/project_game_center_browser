@@ -1,8 +1,21 @@
 var Model = {
-  init: function() {
-    // im initialized
+  boardEdges: {
+    xmax: 0,
+    ymax: 0
   },
-  gameStart: function(){}
+
+  init: function(size) {
+    this.createBoard(size);
+    //this.createSnake();
+    // this.placeFood();
+  },
+
+
+  createBoard: function(size){
+    this.boardEdges.xmax = size;
+    this.boardEdges.ymax = size;
+  }
+
 };
 
 // store snake body, array of coordinates. 
