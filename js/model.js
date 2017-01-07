@@ -8,12 +8,13 @@ var Model = {
 
   foodCoords: [],
 
+  currentDirection: '',
+
   init: function(size) {
     this.createBoard(size);
     this.createSnake();
     this.addFood();
   },
-
 
   createBoard: function(size){
     this.boardEdges.xmax = size;
@@ -28,6 +29,23 @@ var Model = {
 
   createSnake: function(){
     this.snakeBody.push(this.genRandCoords());
+  },
+
+  snakeMove: function() {
+    console.log("snek mooooooved");
+    // this.checkDirection();
+  },
+
+  checkDirection: function() {
+    return this.currentDirection;
+  },
+
+  // left off here
+  setDirection: function() {
+    switch (this.checkDirection) {
+      case 'l':
+        break;
+    }
   },
 
   addFood: function() {

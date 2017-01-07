@@ -9,11 +9,16 @@ var Controller = {
     View.renderBoard(Model.boardEdges);
     View.renderMGS(Model.snakeBody);
     View.renderFood(Model.foodCoords);
+    this.gameLoop();
   },
 
   selectSize: function(event){
      var size = View.returnSize();
      Controller.initalizeBoard(size);
+  },
+
+  gameLoop: function() {
+    setInterval(Model.snakeMove, 1000);
   },
 
   clear: function() {
