@@ -13,8 +13,8 @@ var Controller = {
   },
 
   selectSize: function(event){
-     var size = View.returnSize();
-     Controller.initalizeBoard(size);
+    var size = View.returnSize();
+    Controller.initalizeBoard(size);
   },
 
   gameLoop: function() {
@@ -29,8 +29,7 @@ var Controller = {
 
 
 
-$(document).ready(function() {
+$(function() {
   Controller.init();
 });
-
 //merge view and model! woo! :D

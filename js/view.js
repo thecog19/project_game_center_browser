@@ -23,8 +23,8 @@ var View = {
   },
 
   renderMGS: function(snake){
-    snake.forEach(function(snakeBit){
-      View.renderObject(snakeBit[0], snakeBit[1], "snek");
+    snake.forEach(snakeBit => {
+      this.renderObject(snakeBit[0], snakeBit[1], "snek");
     });
   },
 
