@@ -15,8 +15,8 @@ var View = {
     for(var col = 0; col < boardEdges.xmax; col++ ){
       for(var cell = 0; cell < boardEdges.ymax; cell++ ){
         var $square = $("<div>").addClass("square").attr({
-          "data-x": col,
-          "data-y": cell
+          "data-x": cell,
+          "data-y": col
         });
         $container.append($square);
       }
