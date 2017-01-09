@@ -38,8 +38,8 @@ var Controller = {
       Controller.initalizeBoard(Controller.size)
     }
     if(Model.onFood()){
-      console.log("yum")
-      Model.grow()
+      Model.eatFood()
+      View.renderFood(Model.foodCoords)
     }
   },
 

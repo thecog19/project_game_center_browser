@@ -8,7 +8,7 @@ var Model = {
 
   foodCoords: [],
 
-  currentDirection: 'r',
+  currentDirection: '',
 
   init: function(size) {
     this.createBoard(size);
@@ -56,7 +56,6 @@ var Model = {
     return this.currentDirection;
   },
 
-  // left off here
   setDirection: function(event) {
     var newDir;
     if(event){
@@ -119,6 +118,12 @@ var Model = {
     
     return overlap
   }, 
+
+  eatFood: function() {
+    this.addFood()
+    //grow the snake
+
+  }
 
 };
 

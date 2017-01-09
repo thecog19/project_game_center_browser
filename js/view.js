@@ -34,6 +34,9 @@ var View = {
   },
 
   renderFood: function(foodCoords) {
+    var $food = $(".food")
+    $food.removeClass("food")
+
     this.renderObject(foodCoords[0], foodCoords[1], "food");
   },
 
