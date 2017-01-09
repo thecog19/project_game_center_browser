@@ -1,7 +1,11 @@
 var Controller = {
   init: function() {
-    View.init({selectSize: this.selectSize});
+    View.init({selectSize: this.selectSize,
+               keyPressed: this.keyPressed});
   },
+
+  interval: "",
+  size: "",
 
   initalizeBoard: function(size){
     this.clear();
@@ -12,16 +16,37 @@ var Controller = {
     this.gameLoop();
   },
 
+  keyPressed: function(event){
+    Model.setDirection(event)
+  },
+
   selectSize: function(event){
-    var size = View.returnSize();
-    Controller.initalizeBoard(size);
+    Controller.size = View.returnSize();
+    Controller.initalizeBoard(Controller.size);
   },
 
   gameLoop: function() {
-    setInterval(Model.snakeMove, 1000);
+    Controller.interval = setInterval(Controller.gameLoopEvents, 1000);
+
+  },
+
+  gameLoopEvents: function(){
+    Model.snakeMove();
+    View.renderMGS(Model.snakeBody);
+    if(Model.checkLose()){
+      View.renderDefeat()
+      Controller.initalizeBoard(Controller.size)
+    }
+    if(Model.onFood()){
+      console.log("yum")
+      Model.grow()
+    }
   },
 
   clear: function() {
+    if(Controller.interval){
+     clearInterval(Controller.interval)
+    }
     Model.snakeBody = [];
     View.clear();
   }

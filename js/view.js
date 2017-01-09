@@ -2,6 +2,8 @@ var View = {
   init: function(callbacks) {
     var $button = $("button");
     $button.on("click", callbacks.selectSize);
+    $(document).keydown(callbacks.keyPressed
+    )
   },
 
   returnSize: function(){
@@ -23,6 +25,9 @@ var View = {
   },
 
   renderMGS: function(snake){
+    var $snake = $(".snek")
+    $snake.removeClass("snek")
+
     snake.forEach(snakeBit => {
       this.renderObject(snakeBit[0], snakeBit[1], "snek");
     });
@@ -42,6 +47,10 @@ var View = {
     var $br = $('br');
     $square.remove();
     $br.remove();
+  },
+
+  renderDefeat: function(){
+    alert("You have been defeated!");
   }
 
 };
