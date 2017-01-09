@@ -4,11 +4,12 @@ var Model = {
     ymax: 0
   },
 
-  snakeBody: [],
-
+  snakeBody1: [],
+  snakeBody2: [],
   foodCoords: [],
 
-  currentDirection: '',
+  currentDirection1: '',
+  currentDirection2: '',
 
   score: 0,
 
@@ -16,7 +17,8 @@ var Model = {
 
   init: function(size) {
     this.createBoard(size);
-    this.createSnake();
+    this.createSnake(Model.snakeBody1);
+    this.createSnake(Model.snakeBody2);
     this.addFood();
   },
 
@@ -31,40 +33,37 @@ var Model = {
     return [x, y];
   },
 
-  createSnake: function(){
-    this.snakeBody.push(this.genRandCoords());
+  createSnake: function(snakeBody){
+    snakeBody.push(this.genRandCoords());
   },
 
-  snakeMove: function() {
-    // console.log("snek mooooooved");
-    var change = Model.setDirection();
-    var snakeHead = Model.snakeBody[0].slice(0)
+  snakeMove: function(snakeBody, firstp) {
+    var change = Model.setDirection(undefined, firstp);
+    var snakeHead = snakeBody[0]
     if(!this.grow){
-      Model.snakeBody.pop()
+      snakeBody.pop()
     }
     this.grow = false
     snakeHead[0] += change[0]
     snakeHead[1] += change[1]
-    Model.snakeBody.unshift(snakeHead)  
+    snakeBody.unshift(snakeHead) 
   },
 
-  checkLose: function() {
-    var headPos = Model.snakeBody[0]
+  checkLose: function(snakeBody) {
+    var headPos = snakeBody[0]
     if(headPos[1] > this.boardEdges.xmax || headPos[1] < 0){
       return true;
     }else if(headPos[0] > this.boardEdges.ymax || headPos[0] < 0){
       return true;
-    }else if(this.snakeCollision(this.snakeBody[0])){
+    }else if(this.snakeCollision(snakeBody[0], snakeBody)){
+      return true
+    }else if(this.snakeOverlap()){
       return true
     }
     return false;
   },
 
-  checkDirection: function() {
-    return this.currentDirection;
-  },
-
-  setDirection: function(event) {
+  setDirection: function(event, firstp = true) {
     var newDir;
     if(event){
       var press = event.which
@@ -76,27 +75,62 @@ var Model = {
         newDir = "l"
       }else if(press === 39){
         newDir = "r"
+      }else if(press === 87){
+        newDir = "u";
+        firstp = false
+      }else if(press === 83){
+        newDir = "d";
+        firstp = false
+      }else if(press === 65){
+        newDir = "l";
+        firstp = false
+      }else if(press === 68){
+        newDir = "r";
+        firstp = false
       }else{
         newDir = false
       }
     }
+    var final = Model.dirAssist(newDir, firstp)
 
-    switch (newDir || this.checkDirection()) {
-      case 'l':
-        Model.currentDirection = "l"
-        return [-1,0]
-      case 'r':
-        Model.currentDirection = "r"
-        return [1,0]
-      case 'u':
-        Model.currentDirection = "u"
-        return [0,-1]
-      case 'd':
-        Model.currentDirection = "d"
-        return [0,1]
-      default:
-        return [0,0]
+    return final;
+
+  },
+
+  setter: function(player1, val){
+    if(player1){
+      Model.currentDirection1 = val
+    }else{
+      Model.currentDirection2 = val
     }
+  },
+
+  checkDir: function(player1){
+    if(player1){
+      return Model.currentDirection1
+    }else{
+      return Model.currentDirection2
+    }
+  },
+
+  dirAssist: function(newDir, player1) {
+
+    switch (newDir || Model.checkDir(player1)) {
+          case 'l':
+            Model.setter(player1, "l")
+            return [-1,0]
+          case 'r':
+            Model.setter(player1, "r")
+            return [1,0]
+          case 'u':
+            Model.setter(player1, "u")
+            return [0,-1]
+          case 'd':
+            Model.setter(player1, "d")
+            return [0,1]
+          default:
+            return [0,0]
+        }
   },
 
   addFood: function() {
@@ -112,14 +146,24 @@ var Model = {
 
   eatFood: function() {
     this.addFood();
-    this.score += 100 * this.snakeBody.length
+    this.score += 100
     this.grow = true;
   },
 
   overlap: function(compareCoord, exclude){
     var overlap = false;
     var storedIndex;
-    this.snakeBody.forEach(function(snakeBit, index) {
+
+    this.snakeBody1.forEach(function(snakeBit, index) {
+      var same = (snakeBit[0] === compareCoord[0] && 
+        snakeBit[1] === compareCoord[1])
+      if (same) {
+        overlap = true;
+      }
+      });
+    return overlap
+
+    this.snakeBody2.forEach(function(snakeBit, index) {
       var same = (snakeBit[0] === compareCoord[0] && 
         snakeBit[1] === compareCoord[1])
       if (same) {
@@ -129,10 +173,14 @@ var Model = {
     return overlap
   },
 
-  snakeCollision: function(head){
+  snakeCollision: function(head, snakeBody){
     //actually all we have to do is make sure that the head doesn't overlap with any of the snake peices. This method should look familiar. 
+    var body = snakeBody.slice(1)
+    console.log(body)
+    console.log(snakeBody)
+    console.log(head)
     var overlap = false;
-    this.snakeBody.slice(1).forEach(function(snakeBit, index) {
+    body.forEach(function(snakeBit, index) {
       var same = (snakeBit[0] === head[0] && 
         snakeBit[1] === head[1])
       if (same) {
@@ -142,27 +190,28 @@ var Model = {
     return overlap
   },
 
+
+  snakeOverlap: function(){
+    var overlap = false
+    Model.snakeBody1.forEach(function(segment){
+      Model.snakeBody2.forEach(function(s2segment){
+          if(segment[0] === s2segment[0] &&segment[1] === s2segment[1]){
+            overlap = true
+          }
+      })
+    })
+    return overlap
+  },
+
   notHead: function(head, snakeBit){
-    console.log(snakeBit)
     if(snakeBit === undefined){
       return false
     }
     if(head[0] === snakeBit[0] && head[1] === snakeBit[1]){
-      console.log("returning true")
+
       return true
     }
     return false
   }
 
 };
-
-// store snake body, array of coordinates.
-// store direction of snake
-// logic for which direction to set the snake
-// store the plane dimensions
-// store food as coordinate pair
-// growning snake logic
-// food placing logic
-// losing logic
-// food eating logic (remove from board)
-// score logic

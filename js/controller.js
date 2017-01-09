@@ -11,7 +11,8 @@ var Controller = {
     this.clear();
     Model.init(size);
     View.renderBoard(Model.boardEdges);
-    View.renderMGS(Model.snakeBody);
+    View.renderMGS(Model.snakeBody1, ".snek");
+    View.renderMGS(Model.snakeBody2, ".p2");
     View.renderFood(Model.foodCoords);
     this.gameLoop();
   },
@@ -31,12 +32,16 @@ var Controller = {
   },
 
   gameLoopEvents: function(){
-    Model.snakeMove();
-    View.renderMGS(Model.snakeBody);
-    if(Model.checkLose()){
+
+    if(Model.checkLose(Model.snakeBody1) || Model.checkLose(Model.snakeBody2)){
       View.renderDefeat(Model.score)
       Controller.initalizeBoard(Controller.size)
     }
+    Model.snakeMove(Model.snakeBody1, true);
+    Model.snakeMove(Model.snakeBody2, false);
+    View.renderMGS(Model.snakeBody1, ".snek");
+    View.renderMGS(Model.snakeBody2, ".p2");
+    
     if(Model.onFood()){
       Model.eatFood()
       View.renderFood(Model.foodCoords)
@@ -48,8 +53,10 @@ var Controller = {
     if(Controller.interval){
      clearInterval(Controller.interval)
     }
-    Model.snakeBody = [];
-    Model.currentDirection = ""
+    Model.snakeBody1 = [];
+    Model.currentDirection1 = ""
+    Model.snakeBody2 = [];
+    Model.currentDirection2 = ""
     Model.score = 0
     View.clear();
   }

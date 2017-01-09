@@ -24,12 +24,12 @@ var View = {
     }
   },
 
-  renderMGS: function(snake){
-    var $snake = $(".snek")
-    $snake.removeClass("snek")
+  renderMGS: function(snake, klass){
+    var $snake = $(klass)
+    $snake.removeClass(klass.slice(1))
 
     snake.forEach(snakeBit => {
-      this.renderObject(snakeBit[0], snakeBit[1], "snek");
+      this.renderObject(snakeBit[0], snakeBit[1], klass.slice(1));
     });
   },
 
