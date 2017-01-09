@@ -26,7 +26,7 @@ var Controller = {
   },
 
   gameLoop: function() {
-    Controller.interval = setInterval(Controller.gameLoopEvents, 1000);
+    Controller.interval = setInterval(Controller.gameLoopEvents, 500);
 
   },
 
@@ -34,12 +34,13 @@ var Controller = {
     Model.snakeMove();
     View.renderMGS(Model.snakeBody);
     if(Model.checkLose()){
-      View.renderDefeat()
+      View.renderDefeat(Model.score)
       Controller.initalizeBoard(Controller.size)
     }
     if(Model.onFood()){
       Model.eatFood()
       View.renderFood(Model.foodCoords)
+      View.updateScore(Model.score)
     }
   },
 
@@ -48,6 +49,8 @@ var Controller = {
      clearInterval(Controller.interval)
     }
     Model.snakeBody = [];
+    Model.currentDirection = ""
+    Model.score = 0
     View.clear();
   }
 };

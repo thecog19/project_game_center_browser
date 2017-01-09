@@ -52,8 +52,12 @@ var View = {
     $br.remove();
   },
 
-  renderDefeat: function(){
-    alert("You have been defeated!");
+  renderDefeat: function(score){
+    alert("You have been defeated! \n Your score was " + score );
+  }, 
+
+  updateScore: function(score){
+    $(".score").text(score)
   }
 
 };

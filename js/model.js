@@ -10,6 +10,8 @@ var Model = {
 
   currentDirection: '',
 
+  score: 0,
+
   grow: false,
 
   init: function(size) {
@@ -52,7 +54,7 @@ var Model = {
       return true;
     }else if(headPos[0] > this.boardEdges.ymax || headPos[0] < 0){
       return true;
-    }else if(this.snakeCollision()){
+    }else if(this.snakeCollision(this.snakeBody[0])){
       return true
     }
     return false;
@@ -110,10 +112,11 @@ var Model = {
 
   eatFood: function() {
     this.addFood();
+    this.score += 100 * this.snakeBody.length
     this.grow = true;
   },
 
-  overlap: function(compareCoord){
+  overlap: function(compareCoord, exclude){
     var overlap = false;
     var storedIndex;
     this.snakeBody.forEach(function(snakeBit, index) {
@@ -121,17 +124,34 @@ var Model = {
         snakeBit[1] === compareCoord[1])
       if (same) {
         overlap = true;
-        storedIndex = index
       }
       });
-    
     return overlap
   },
 
-  snakeCollision: function(){
+  snakeCollision: function(head){
     //actually all we have to do is make sure that the head doesn't overlap with any of the snake peices. This method should look familiar. 
-    //
+    var overlap = false;
+    this.snakeBody.slice(1).forEach(function(snakeBit, index) {
+      var same = (snakeBit[0] === head[0] && 
+        snakeBit[1] === head[1])
+      if (same) {
+        overlap = true;
+      }
+      });
+    return overlap
+  },
 
+  notHead: function(head, snakeBit){
+    console.log(snakeBit)
+    if(snakeBit === undefined){
+      return false
+    }
+    if(head[0] === snakeBit[0] && head[1] === snakeBit[1]){
+      console.log("returning true")
+      return true
+    }
+    return false
   }
 
 };
