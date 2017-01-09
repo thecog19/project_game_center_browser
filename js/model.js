@@ -118,7 +118,7 @@ var Model = {
       });
     
     return overlap
-  },
+  }, 
 
 };
 
